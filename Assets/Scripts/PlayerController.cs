@@ -17,6 +17,13 @@ public class PlayerController : MonoBehaviour
     public float turnFactor = 25;
 
     [SerializeField]
+    [Header("Shoot settings")]
+    public Transform firePoint;
+
+    public GameObject bulletPrefab;
+
+    [SerializeField]
+    [Header("Obstacle settings")]
     public Tilemap obstacle;
 
     private float accelerationInput = 0;
@@ -28,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private Vector3 moveToPosition;
+
 
     private void Awake()
     {
@@ -41,6 +49,17 @@ public class PlayerController : MonoBehaviour
     {
         InputVector();
         UpdateHealthbar();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
+       
+    }
+
+    private void Shoot()
+    {
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
 
     private void FixedUpdate()
