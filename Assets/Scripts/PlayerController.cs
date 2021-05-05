@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     [Header("Boat Settings")]
-    public float accelerationFactor;
+    public float accelerationFactor = 25;
 
-    public float turnFactor;
+    public float turnFactor = 25;
 
     private float accelerationInput = 0;
     private float steeringInput = 0;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyVerticalForce()
     {
-        Vector2 verticalForceVector = transform.up * accelerationInput * accelerationFactor;
+        Vector2 verticalForceVector = transform.up * accelerationInput * accelerationFactor * Time.fixedDeltaTime;
 
         rb.AddForce(verticalForceVector, ForceMode2D.Force);
     }
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         rotationAngle -= steeringInput * turnFactor;
 
-        rb.MoveRotation(rotationAngle);
+        rb.MoveRotation(rotationAngle *Time.fixedDeltaTime);
     }
 
     private void InputVector()
