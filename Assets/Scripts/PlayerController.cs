@@ -7,40 +7,64 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
 
     [SerializeField]
-    public float moveSpeed;
-    public float rotationPower;
+    [Header("Boat Settings")]
+    public float accelerationFactor;
+    public float turnFactor;
 
-    public float rotationAmout, speed, direction, maxSpeed;
+    [SerializeField]
+    [Header("Local variables")]
+    public float accelerationInput = 0;
+    public float steeringInput = 0;
 
-    private Vector2 movement;
+    public float rotationAngle = 0;
 
-    public float aux;
-
-    // Start is called before the first frame update
+    public Vector2 rbVelocity;
     private void Awake()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-       
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        InputVector();
+    }
 
     private void FixedUpdate()
     {
+        ApplyEngineForce();
+        ApplySteering();
+        UpdateVelocity();
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            aux = moveSpeed;
-        }
+    }
 
+    void ApplyEngineForce()
+    {
+        Vector2 engineForceVector = transform.up * accelerationInput * accelerationFactor;
 
-        
-        rotationAmout = -Input.GetAxis("Horizontal");
-        if(speed < maxSpeed)      speed = aux * rotationPower;
-        direction = Mathf.Sign(Vector2.Dot(rb.velocity, rb.GetRelativeVector(Vector2.up)));
-        rb.rotation += rotationAmout * rotationPower * rb.velocity.magnitude;
+        rb.AddForce(engineForceVector, ForceMode2D.Force);
+    }
 
-        rb.AddRelativeForce(Vector2.up * speed);
-        rb.AddRelativeForce(-Vector2.right * rb.velocity.magnitude * rotationAmout / 2);
+    void ApplySteering()
+    {
+        rotationAngle -= steeringInput * turnFactor;
+
+            rb.MoveRotation(rotationAngle);
+    }
+
+    void UpdateVelocity()
+    {
+        rbVelocity = rb.velocity;
+    }
+
+    void InputVector()
+    {
+        Vector2 inputVector = Vector2.zero;
+
+        inputVector.x = Input.GetAxis("Horizontal");
+        inputVector.y = Input.GetAxis("Vertical");
+
+        steeringInput = inputVector.x;
+        accelerationInput = inputVector.y;
+
     }
 }
