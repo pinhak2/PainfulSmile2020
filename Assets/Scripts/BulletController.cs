@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -28,6 +29,6 @@ public class BulletController : MonoBehaviour
     private void Explosion()
     {
       GameObject explosionEffectInstance =  Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        Destroy(explosionEffectInstance, 1);
+     //   Destroy(explosionEffectInstance, 1);
     }
 }
