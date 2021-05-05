@@ -1,62 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    [SerializeField]
+    [Header("Health Settings")]
+    public float health;
+
+    public float maxHealth;
+    public HealthbarBehaviour healthbar;
 
     [SerializeField]
     [Header("Boat Settings")]
     public float accelerationFactor;
+
     public float turnFactor;
 
-    [SerializeField]
-    [Header("Local variables")]
-    public float accelerationInput = 0;
-    public float steeringInput = 0;
+    private float accelerationInput = 0;
+    private float steeringInput = 0;
+    private float rotationAngle = 0;
 
-    public float rotationAngle = 0;
+    private Vector2 rbVelocity;
 
-    public Vector2 rbVelocity;
+    private Rigidbody2D rb;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = maxHealth;
+        UpdateHealthbar();
     }
 
     private void Update()
     {
         InputVector();
+        UpdateHealthbar();
     }
+
+
 
     private void FixedUpdate()
     {
-        ApplyEngineForce();
-        ApplySteering();
-        UpdateVelocity();
-
+        ApplyVerticalForce();
+        RotateBoat();
     }
 
-    void ApplyEngineForce()
+    private void ApplyVerticalForce()
     {
-        Vector2 engineForceVector = transform.up * accelerationInput * accelerationFactor;
+        Vector2 verticalForceVector = transform.up * accelerationInput * accelerationFactor;
 
-        rb.AddForce(engineForceVector, ForceMode2D.Force);
+        rb.AddForce(verticalForceVector, ForceMode2D.Force);
     }
 
-    void ApplySteering()
+    private void RotateBoat()
     {
         rotationAngle -= steeringInput * turnFactor;
 
-            rb.MoveRotation(rotationAngle);
+        rb.MoveRotation(rotationAngle);
     }
 
-    void UpdateVelocity()
-    {
-        rbVelocity = rb.velocity;
-    }
-
-    void InputVector()
+    private void InputVector()
     {
         Vector2 inputVector = Vector2.zero;
 
@@ -65,6 +67,20 @@ public class PlayerController : MonoBehaviour
 
         steeringInput = inputVector.x;
         accelerationInput = inputVector.y;
+    }
 
+    public void TakeHit(float damage)
+    {
+        health -= damage;
+
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void UpdateHealthbar()
+    {
+        healthbar.SetHealth(health, maxHealth);
     }
 }
