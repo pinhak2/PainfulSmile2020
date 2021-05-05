@@ -1,17 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
     public Transform target;
+    public float fieldOfView;
 
-    void Start()
+    private void Update()
     {
-        
+        MoveCameraWithTarget();
     }
 
-    void Update()
+    private void MoveCameraWithTarget()
     {
         transform.position = new Vector3(target.transform.position.x, transform.transform.position.y, this.transform.position.z);
     }
