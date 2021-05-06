@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [Header("Boat Settings")]
     public GameObject boat;
 
+    public Sprite boatSpriteFullHealth;
+    public Sprite boatSpriteHalfHealth;
+    public Sprite boatSpriteLowHealth;
+
     public float accelerationFactor = 25;
 
     public float turnFactor = 25;
@@ -46,6 +50,11 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         moveToPosition = Vector3.zero;
         UpdateHealthbar();
+    }
+
+    private void Start()
+    {
+        GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteFullHealth;
     }
 
     private void Update()
@@ -126,6 +135,16 @@ public class PlayerController : MonoBehaviour
         if (health > 0) health -= damage;
 
         UpdateHealthbar();
+
+        if (health > 2)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteHalfHealth;
+        }
+
+        if (health <= 2 && health >= 1)
+        {
+            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteLowHealth;
+        }
         if (health <= 0)
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity);

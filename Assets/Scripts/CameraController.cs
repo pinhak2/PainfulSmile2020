@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -14,8 +12,6 @@ public class CameraController : MonoBehaviour
 
     private void MoveCameraWithTarget()
     {
- 
-            transform.position = new Vector3(target.transform.position.x, transform.transform.position.y, this.transform.position.z);
-
+        transform.position = new Vector3(target.transform.position.x, transform.transform.position.y, this.transform.position.z);
     }
 }

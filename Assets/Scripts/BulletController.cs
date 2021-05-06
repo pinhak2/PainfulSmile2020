@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -28,6 +26,6 @@ public class BulletController : MonoBehaviour
 
     private void Explosion()
     {
-      Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
     }
 }

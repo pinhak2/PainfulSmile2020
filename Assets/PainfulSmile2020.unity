@@ -297,6 +297,9 @@ MonoBehaviour:
   healthbar: {fileID: 589574931}
   explosionEffect: {fileID: 5985654333348653509, guid: 030937b3ddbf60844975bc5174d4156c, type: 3}
   boat: {fileID: 1358023697}
+  boatSpriteFullHealth: {fileID: 7579795347873340471, guid: c7aae9999c65f2c4db4aaa8e44544071, type: 3}
+  boatSpriteHalfHealth: {fileID: 6452030658119361444, guid: c7aae9999c65f2c4db4aaa8e44544071, type: 3}
+  boatSpriteLowHealth: {fileID: -7795679655831782076, guid: c7aae9999c65f2c4db4aaa8e44544071, type: 3}
   accelerationFactor: 30
   turnFactor: 25
   firePoint: {fileID: 389772435}
