@@ -3,7 +3,6 @@ using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
     [Header("Health Settings")]
     public float health;
 
@@ -12,25 +11,29 @@ public class PlayerController : MonoBehaviour
     public HealthbarBehaviour healthbar;
     public GameObject explosionEffect;
 
-    [SerializeField]
     [Header("Boat Settings")]
     public GameObject boat;
 
-    public Sprite boatSpriteFullHealth;
-    public Sprite boatSpriteHalfHealth;
-    public Sprite boatSpriteLowHealth;
+    [Header("Sprites")]
+    public Sprite[] boatSpriteArray;
 
+    [Header("Variables")]
     public float accelerationFactor = 25;
 
     public float turnFactor = 25;
 
-    [SerializeField]
     [Header("Shoot settings")]
-    public Transform firePoint;
-
     public GameObject bulletPrefab;
 
-    [SerializeField]
+    [Header("Front Firepoint")]
+    public Transform firePointFront;
+
+    [Header("Left Firepoints")]
+    public Transform[] leftFirePoints;
+
+    [Header("Right Firepoints")]
+    public Transform[] rightFirePoints;
+
     [Header("Obstacle settings")]
     public Tilemap obstacle;
 
@@ -54,27 +57,52 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteFullHealth;
+        GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[0];
     }
 
     private void Update()
     {
         InputVector();
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TakeHit();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Shoot();
+            Shoot("front");
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Shoot("left");
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Shoot("right");
         }
     }
 
-    private void Shoot()
+    private void Shoot(string side)
     {
-        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        if (side == "front")
+            Instantiate(bulletPrefab, firePointFront.position, firePointFront.rotation);
+
+        if (side == "left")
+        {
+            for (int i = 0; i < leftFirePoints.Length; i++)
+            {
+                Instantiate(bulletPrefab, leftFirePoints[i].position, leftFirePoints[i].rotation);
+            }
+        }
+
+        if (side == "right")
+        {
+            for (int i = 0; i < rightFirePoints.Length; i++)
+            {
+                Instantiate(bulletPrefab, rightFirePoints[i].position, rightFirePoints[i].rotation);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -138,12 +166,12 @@ public class PlayerController : MonoBehaviour
 
         if (health > 2)
         {
-            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteHalfHealth;
+            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[1];
         }
 
         if (health <= 2 && health >= 1)
         {
-            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteLowHealth;
+            GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[2];
         }
         if (health <= 0)
         {
