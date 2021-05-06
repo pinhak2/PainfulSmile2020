@@ -8,7 +8,7 @@
 </h1>
 
 <h2>
-<p align="center"> Arrow or (W,A,S,D) to move </p>
+<p align="center"> Arrows or (W,A,S,D) to move </p>
 <p align="center"> Spacebar to shoot foward </p>
 <p align="center"> (Q,E) to shoot left and right </p>
 </h2>
