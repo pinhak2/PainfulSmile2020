@@ -293,7 +293,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 5
+  damage: 1
   healthbar: {fileID: 589574931}
+  explosionEffect: {fileID: 5985654333348653509, guid: 030937b3ddbf60844975bc5174d4156c, type: 3}
+  boat: {fileID: 1358023697}
   accelerationFactor: 30
   turnFactor: 25
   firePoint: {fileID: 389772435}
@@ -1799,8 +1802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1023798708}
-  lowLifeColor: {r: 0, g: 0, b: 0, a: 0}
-  highHealthColor: {r: 0, g: 0, b: 0, a: 0}
+  lowLifeColor: {r: 1, g: 0, b: 0, a: 1}
+  highHealthColor: {r: 0, g: 1, b: 0, a: 1}
   offsetFromTarget: {x: 0, y: 0, z: 0}
 --- !u!114 &589574932
 MonoBehaviour:

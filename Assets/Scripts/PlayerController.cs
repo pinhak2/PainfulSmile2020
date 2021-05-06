@@ -8,10 +8,14 @@ public class PlayerController : MonoBehaviour
     public float health;
 
     public float maxHealth;
+    public int damage;
     public HealthbarBehaviour healthbar;
+    public GameObject explosionEffect;
 
     [SerializeField]
     [Header("Boat Settings")]
+    public GameObject boat;
+
     public float accelerationFactor = 25;
 
     public float turnFactor = 25;
@@ -36,7 +40,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 moveToPosition;
 
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -48,13 +51,16 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         InputVector();
-        UpdateHealthbar();
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TakeHit();
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Shoot();
         }
-       
     }
 
     private void Shoot()
@@ -115,13 +121,15 @@ public class PlayerController : MonoBehaviour
         accelerationInput = inputVector.y;
     }
 
-    public void TakeHit(float damage)
+    public void TakeHit()
     {
-        health -= damage;
+        if (health > 0) health -= damage;
 
+        UpdateHealthbar();
         if (health <= 0)
         {
-            Destroy(this.gameObject);
+            Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            Destroy(boat);
         }
     }
 

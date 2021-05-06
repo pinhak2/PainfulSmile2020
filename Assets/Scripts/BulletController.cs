@@ -28,7 +28,6 @@ public class BulletController : MonoBehaviour
 
     private void Explosion()
     {
-      GameObject explosionEffectInstance =  Instantiate(explosionEffect, transform.position, Quaternion.identity);
-     //   Destroy(explosionEffectInstance, 1);
+      Instantiate(explosionEffect, transform.position, Quaternion.identity);
     }
 }

@@ -1,11 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosionController : MonoBehaviour
 {
-    SpriteRenderer rend;
+    private SpriteRenderer rend;
     public GameObject sprite;
+
     private void Awake()
     {
         rend = GetComponentInChildren<SpriteRenderer>();
@@ -16,20 +16,30 @@ public class ExplosionController : MonoBehaviour
         startFading();
     }
 
-
-    IEnumerator FadeOut()
+    private IEnumerator FadeOut()
     {
-        for(float f = 1; f >= -0.3f; f -= 0.3f)
+        for (float f = 1; f >= -0.3f; f -= 0.3f)
         {
-            Vector3 spriteTransform = sprite.transform.localScale;
-            Color c = rend.material.color;
-            c.a = f;
-            rend.material.color = c;
-            spriteTransform = new Vector3(spriteTransform.x - 0.3f, spriteTransform.y - 0.3f, 0);
-            sprite.transform.localScale = spriteTransform;
+            ChangeSpriteSize(f);
+            ChangeSpriteAlpha(f);
+
             yield return new WaitForSeconds(0.05f);
         }
-       Destroy(this.gameObject);
+        Destroy(this.gameObject);
+    }
+
+    private void ChangeSpriteAlpha(float f)
+    {
+        Color c = rend.material.color;
+        c.a = f;
+        rend.material.color = c;
+    }
+
+    private void ChangeSpriteSize(float f)
+    {
+        Vector3 spriteTransform = sprite.transform.localScale;
+        spriteTransform = new Vector3(spriteTransform.x - f, spriteTransform.y - f, 0);
+        sprite.transform.localScale = spriteTransform;
     }
 
     public void startFading()
