@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -12,21 +10,19 @@ public class Spawner : MonoBehaviour
     public static float spawnDelay;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        InvokeRepeating("BeginSpawn", spawnTime,spawnDelay);
+        InvokeRepeating("BeginSpawn", spawnTime, spawnDelay);
     }
 
     // Update is called once per frame
 
     private void SpawnObject()
     {
-    
-            int randEnemy = Random.Range(0, enemyPrefabs.Length);
-            int randSpawnPoint = Random.Range(0, spawnPoints.Length);
+        int randEnemy = Random.Range(0, enemyPrefabs.Length);
+        int randSpawnPoint = Random.Range(0, spawnPoints.Length);
 
-            Instantiate(enemyPrefabs[randEnemy], spawnPoints[randSpawnPoint].position, transform.rotation);
-        
+        Instantiate(enemyPrefabs[randEnemy], spawnPoints[randSpawnPoint].position, transform.rotation);
     }
 
     private void BeginSpawn()

@@ -16,7 +16,6 @@ public class HealthbarBehaviour : MonoBehaviour
         ChangeHealthbarColor();
     }
 
-
     private void Update()
     {
         SetHealthbarPosition();
