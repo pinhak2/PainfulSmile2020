@@ -3,8 +3,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Transform target;
-    public float fieldOfView;
 
+
+    private void Awake()
+    {
+        MoveCameraWithTarget();
+    }
     private void Update()
     {
         MoveCameraWithTarget();
@@ -12,6 +16,6 @@ public class CameraController : MonoBehaviour
 
     private void MoveCameraWithTarget()
     {
-        transform.position = new Vector3(target.transform.position.x, transform.transform.position.y, this.transform.position.z);
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, this.transform.position.z);
     }
 }
