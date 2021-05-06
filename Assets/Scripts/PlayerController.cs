@@ -45,17 +45,21 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private Vector3 moveToPosition;
+    private GameObject gameManager;
 
     private void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("Manager");
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         moveToPosition = Vector3.zero;
+        boat.SetActive(true);
         UpdateHealthbar();
     }
 
     private void Start()
     {
+        
         GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[0];
     }
 
@@ -178,10 +182,17 @@ public class PlayerController : MonoBehaviour
         }
         if (health == 0)
         {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-            Destroy(boat);
-            Time.timeScale = 0f;
+            Die();
         }
+    }
+
+    private void Die()
+    {
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        boat.SetActive(false);
+        gameManager.GetComponent<GameManagerController>().canvas.SetActive(true);
+        gameManager.GetComponent<GameManagerController>().textScore.text = "Score: " + gameManager.GetComponent<GameManagerController>().score;
+
     }
 
     private void UpdateHealthbar()

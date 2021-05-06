@@ -25,11 +25,15 @@ public class ShooterController : MonoBehaviour
     [Header("Sprites")]
     public Sprite[] boatSpriteArray;
 
+
+
+    private GameObject gameManager;
     private Rigidbody2D rb;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        gameManager = GameObject.FindGameObjectWithTag("Manager");
         rb = this.GetComponent<Rigidbody2D>();
         health = maxHealth;
                 timeBtwShots = startTimeBtwShots;
@@ -110,12 +114,14 @@ public class ShooterController : MonoBehaviour
         else if (health == 0)
         {
             Die();
+           
         }
     }
 
     private void Die()
     {
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        gameManager.GetComponent<GameManagerController>().score++;
         Destroy(this.gameObject);
     }
 

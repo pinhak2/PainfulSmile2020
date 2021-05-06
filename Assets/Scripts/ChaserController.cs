@@ -19,11 +19,14 @@ public class ChaserController : MonoBehaviour
     [Header("Sprites")]
     public Sprite[] boatSpriteArray;
 
+    private GameObject gameManager;
+
     private Rigidbody2D rb;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        gameManager = GameObject.FindGameObjectWithTag("Manager");
         rb = this.GetComponent<Rigidbody2D>();
         health = maxHealth;
 
@@ -87,6 +90,7 @@ public class ChaserController : MonoBehaviour
     private void Die()
     {
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        gameManager.GetComponent<GameManagerController>().score++ ;
         Destroy(this.gameObject);
     }
 
