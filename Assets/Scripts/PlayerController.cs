@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     public float health;
 
     public float maxHealth;
-    public int damage;
     public HealthbarBehaviour healthbar;
     public GameObject explosionEffect;
 
@@ -64,10 +63,6 @@ public class PlayerController : MonoBehaviour
     {
         InputVector();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeHit();
-        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -155,15 +150,23 @@ public class PlayerController : MonoBehaviour
         inputVector.y = Input.GetAxis("Vertical");
 
         steeringInput = inputVector.x;
-        accelerationInput = inputVector.y;
+        if (inputVector.y < 0) { accelerationInput = 0; }
+        else
+        {
+            accelerationInput = inputVector.y;
+        }
     }
 
-    public void TakeHit()
+    public void TakeHit(int damage)
     {
         if (health > 0) health -= damage;
 
         UpdateHealthbar();
+        UpdateSprite();
+    }
 
+    private void UpdateSprite()
+    {
         if (health > 2)
         {
             GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[1];
@@ -173,10 +176,11 @@ public class PlayerController : MonoBehaviour
         {
             GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[2];
         }
-        if (health <= 0)
+        if (health == 0)
         {
             Instantiate(explosionEffect, transform.position, Quaternion.identity);
             Destroy(boat);
+            Time.timeScale = 0f;
         }
     }
 
