@@ -13,9 +13,9 @@ public class HealthbarBehaviour : MonoBehaviour
         slider.gameObject.SetActive((health < maxHealth) && (health > 0));
         slider.value = health;
         slider.maxValue = maxHealth;
-
         ChangeHealthbarColor();
     }
+
 
     private void Update()
     {

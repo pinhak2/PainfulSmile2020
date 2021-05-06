@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         moveToPosition = Vector3.zero;
         boat.SetActive(true);
         UpdateHealthbar();
+        Time.timeScale = 1f;
     }
 
     private void Start()
@@ -180,7 +181,7 @@ public class PlayerController : MonoBehaviour
         {
             GetComponentInChildren<SpriteRenderer>().sprite = boatSpriteArray[2];
         }
-        if (health == 0)
+        if (health <= 0)
         {
             Die();
         }
@@ -191,8 +192,9 @@ public class PlayerController : MonoBehaviour
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
         boat.SetActive(false);
         gameManager.GetComponent<GameManagerController>().canvas.SetActive(true);
-        gameManager.GetComponent<GameManagerController>().textScore.text = "Score: " + gameManager.GetComponent<GameManagerController>().score;
+        gameManager.GetComponent<GameManagerController>().textScore.text = "Score: " + GameManagerController.score;
 
+        Time.timeScale = 0f;
     }
 
     private void UpdateHealthbar()

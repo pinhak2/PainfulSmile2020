@@ -90,7 +90,7 @@ public class ChaserController : MonoBehaviour
     private void Die()
     {
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        gameManager.GetComponent<GameManagerController>().score++ ;
+       GameManagerController.score++ ;
         Destroy(this.gameObject);
     }
 
